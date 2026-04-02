@@ -2,19 +2,28 @@ const express = require('express');
 
 const app = express();
 
-app.use("/test2",(req,res)=>{
-    res.send("Hello from Devtinder!");
+//This req will match for onle "GET" http method API calls 
+app.get("/user",(req,res)=>{
+    res.send({"Firstname":"Akash","Lastname":"K"})
 })
 
-app.use("/hello",(req,res)=>{
-    res.send("Hello!");
+// Post method
+app.post("/user",(req,res)=>{
+    res.send("Save success");
 })
 
+app.delete("/user",(req,res)=>{
+    res.send("Delete success")
+})
+
+
+// This req will match for all thw http method API calls 
 app.use("/test",(req,res)=>{
     res.send("Hello World!");
 })
 
+
 app.listen(3000,()=>{
     console.log("Server is successfull listening on port 3000");
 });
-
+            
