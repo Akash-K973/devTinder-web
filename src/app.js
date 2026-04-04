@@ -2,28 +2,26 @@ const express = require('express');
 
 const app = express();
 
-//This req will match for onle "GET" http method API calls 
-app.get("/user",(req,res)=>{
-    res.send({"Firstname":"Akash","Lastname":"K"})
+const { adminAuth, userAuth } = require("./middlewares/auth");
+
+app.use("/admin",adminAuth);
+
+app.use("/user/login",(req,res)=>{
+    res.send("login successfull");
 })
 
-// Post method
-app.post("/user",(req,res)=>{
-    res.send("Save success");
+app.get("/user",userAuth,(req,res)=>{
+    res.send("user data send");
 })
 
-app.delete("/user",(req,res)=>{
-    res.send("Delete success")
+app.get("/admin/getAllData",(req,res)=>{
+    res.send("AllDatesend")
 })
 
-
-// This req will match for all thw http method API calls 
-app.use("/test",(req,res)=>{
-    res.send("Hello World!");
+app.get("/admin/deleteAllData",(req,res)=>{
+    res.send("AllDateDelete");
 })
-
 
 app.listen(3000,()=>{
     console.log("Server is successfull listening on port 3000");
 });
-            
