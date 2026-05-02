@@ -35,7 +35,9 @@ userRouter.get("/user/connections",userAuth,async (req,res)=>{
             ]
         }).populate("fromUserId",["firstName","lastName","photoURl","age","skills","about","gender"]).populate("toUserId",["firstName","lastName","photoURl","age","skills","about","gender"]);
 
+        console.log(connectionRequests)
         const data = connectionRequests.map((row)=>{
+
             if(row.fromUserId._id.toString() === loggedInUser._id.toString()){
                 return row.toUserId;
             }
@@ -72,7 +74,7 @@ userRouter.get("/feed",userAuth,async (req,res)=>{
            $and:[ {_id : {$nin : Array.from(hideUsersFromFeed)}},
             {_id : {$ne : loggedInUser._id}}
            ],
-        }).select("firstName lastName photoURl age skills gender").skip(skip).limit(limit);
+        }).select("firstName lastName photoURl age skills gender about").skip(skip).limit(limit);
         console.log({data:users})
         res.send({data:users});
     }
