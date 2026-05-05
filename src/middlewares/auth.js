@@ -2,7 +2,6 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 
 const userAuth = async (req,res,next)=>{
-    
     try{
     // read token from the cookies
     const {token}=req.cookies;
@@ -10,7 +9,7 @@ const userAuth = async (req,res,next)=>{
         return res.status(401).send("Please login!")
     }
     const decodeObj = await jwt.verify(token,"DEV@Tinder$790");
-
+    
     const {_id}=decodeObj;
     const user = await User.findById(_id);
     if(!user){
