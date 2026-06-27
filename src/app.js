@@ -6,6 +6,7 @@ const cors = require ("cors");
 const ConnectionRequest = require("./models/connectionRequest")
 const {userAuth} = require("./middlewares/auth")
 const http = require("http");
+const dotenv = require("dotenv").config();
 
 
 app.use(cors({
@@ -16,6 +17,7 @@ app.use(cors({
 
 app.use(express.json());
 app.use(cookieParser());
+
 
 const {authRouter} = require("./routes/auth");
 const {profileRouter} = require("./routes/profile");
@@ -30,13 +32,15 @@ app.use("/",requestRouter);
 app.use("/",userRouter);
 app.use("/",chatRouter);
 
+
+
 const server = http.createServer(app);
 initializeSocket(server);
 
 connectDb().then(()=>{
     console.log("Database connected");
-    server.listen(3000,()=>{
-    console.log("Server is successfull listening on port 3000");
+    server.listen(process.env.PORT,()=>{
+    console.log(`Server is successfull listening on port 3000`);
 });
 })
 .catch((err)=>{

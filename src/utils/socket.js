@@ -45,8 +45,6 @@ const initializeSocket = (server)=>{
             catch(err){
                 console.log(err);
             }
-            
-
         })
         socket.on("disconnect",()=>{
 
